@@ -1,7 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { signupRequest, loginRequest, verifyTokenRequest } from '../api/auth';
 import Cookies from 'js-cookie';
-import { set } from "mongoose";
 
 export const AuthContext = createContext()
 export const useAuth = () => {
