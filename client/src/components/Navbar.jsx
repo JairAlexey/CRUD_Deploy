@@ -1,5 +1,5 @@
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaHome } from 'react-icons/fa';
 
 function Navbar() {
@@ -8,21 +8,21 @@ function Navbar() {
     const navigate = useNavigate();
     return (
         <nav>
-            <a href="/"><FaHome style={{ fontSize: '24px' }} /></a> 
+            <Link href="/"><FaHome style={{ fontSize: '24px' }} /></Link> 
             <ul>
                 {isAuthenticated ? (
                 <>
                     <li>
-                        <a href="/products">Productos</a>
+                        <Link to="/products">Productos</Link>
                         <button onClick={() => navigate('/add-products')}>Nuevo producto</button>
-                        <a href="/login" onClick={() => {logout();}}>Logout</a>
+                        <Link to="/login" onClick={() => {logout();}}>Logout</Link>
                     </li>
                 </>
                 ) : (
                 <>
                     <li>
-                        <a href="/login">Iniciar Sesión</a>
-                        <a href="/signup">Registrarse</a>
+                        <Link to="/login">Iniciar Sesión</Link>
+                        <Link to="/signup">Registrarse</Link>
                     </li>
                 </>
                 )}
