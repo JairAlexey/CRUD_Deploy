@@ -28,7 +28,7 @@ export const signup = async (req, res) => {
 
         const token = await createToken({ id: userSaved._id });
 
-        res.cookie('token', token);
+        res.cookie('token', token, { httpOnly: true }); 
         res.json({
             id: userSaved._id,
             username: userSaved.username,
@@ -59,7 +59,7 @@ export const login = async (req, res) => {
         const token = await createToken({ id: userFound._id });
         
         // Enviamos la respuesta al cliente
-        res.cookie('token', token);
+        res.cookie('token', token, { httpOnly: true }); 
         res.json({
             id: userFound._id,
             username: userFound.username,
