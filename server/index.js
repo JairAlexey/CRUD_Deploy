@@ -1,5 +1,5 @@
-import app from './app.js';
-import { connectionDB } from './db.js';
+import app from './src/app.js';
+import { connectionDB } from './src/db.js';
 
 connectionDB();
 app.listen(3000)
