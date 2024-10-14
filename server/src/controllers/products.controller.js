@@ -2,6 +2,10 @@ import Product from '../models/product.model.js';
 
 
 export const getProducts = async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ message: 'No estás autenticado' });
+    }
+
     try {
         const products = await Product.find({ user: req.user.id }).populate("user");
         res.json(products);
