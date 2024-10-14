@@ -1,0 +1,214 @@
+body {
+  background-color: #121212;
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #1f1f1f;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+}
+
+input::placeholder {
+  color: #bbb;
+}
+
+textarea {
+  width: 90%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+}
+
+textarea::placeholder, input::placeholder {
+  color: #bbb;
+}
+
+textarea:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus , input[type="number"]:focus {
+  outline: none;
+  border-color: #007bff; 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+textarea {
+  resize: vertical; 
+}
+
+button {
+  padding: 12px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  background-color: #ff4d4d;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.error-message p {
+  margin: 0;
+  color: white;
+  font-size: 14px;
+}
+
+.signup-prompt {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.signup-prompt a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.signup-prompt a:hover {
+  text-decoration: underline;
+}
+
+
+nav {
+  background-color: #1f1f1f; 
+  padding: 15px; 
+  border-radius: 10px;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+
+ul {
+  list-style-type: none; 
+  padding: 0; 
+  margin-left: 0; 
+  display: flex; 
+}
+
+a {
+  color: white; 
+  text-decoration: none; 
+  font-weight: bold; 
+  margin: 20px;
+}
+
+a:hover {
+  text-decoration: underline; 
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.container-global {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  padding: 20px; 
+  min-height: 50vh;
+}
+
+.product-card {
+  width: 350px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px auto;
+  background-color: #1f1f1f;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.product-card h1 {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.product-card p {
+  text-align: left;
+  font-size: 1.1em;
+  margin: 5px 0;
+  color: #ddd;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-editar, .button-eliminar {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.button-editar {
+  background-color: #007bff;
+  color: white;
+}
+
+.button-editar:hover {
+  background-color: #0056b3;
+}
+
+.button-eliminar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.button-eliminar:hover {
+  background-color: #e4606d;
+}
