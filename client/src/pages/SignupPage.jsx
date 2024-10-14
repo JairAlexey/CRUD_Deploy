@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function SignupPage() {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -72,7 +72,7 @@ function SignupPage() {
                 <button type='submit'>Registrarse</button>
             </form>
             <p className="signup-prompt">
-                Ya tienes cuenta? <a href="/login">Inicia sesión</a>
+                Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
             </p>
         </div>
     );

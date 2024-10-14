@@ -8,7 +8,7 @@ function Navbar() {
     const navigate = useNavigate();
     return (
         <nav>
-            <Link href="/"><FaHome style={{ fontSize: '24px' }} /></Link> 
+            <Link to="/"><FaHome style={{ fontSize: '24px' }} /></Link> 
             <ul>
                 {isAuthenticated ? (
                 <>
