@@ -8,7 +8,7 @@ import cors from 'cors';
 const app = express();
 
 app.use(cors({
-    origin: 'https://mern-vercel-client-omega.vercel.app',
+    origin: ['https://mern-vercel-client-omega.vercel.app', 'http://localhost:5173'],
     credentials: true,
 }));
 app.use(cookieParser());
