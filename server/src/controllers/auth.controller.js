@@ -27,6 +27,7 @@ export const signup = async (req, res) => {
         const userSaved = await newUser.save();
 
         const token = await createToken({ id: userSaved._id });
+        console.log("Token generado:", token);
 
         res.cookie('token', token);
         res.json({
