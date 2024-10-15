@@ -20,7 +20,7 @@ export function ProductProvider({ children }) {
         try{
             const res = await getProductsRequest()
             setProducts(res.data);
-        }catch{
+        }catch (error){
             console.error(error)
         }
     }
