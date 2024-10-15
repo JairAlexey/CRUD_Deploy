@@ -65,7 +65,7 @@ export const login = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true, // Esto evita que el token sea accesible desde JavaScript
             secure: process.env.NODE_ENV === 'production', // Asegúrate de que esto esté habilitado en producción
-            sameSite: 'None', // O 'Lax', dependiendo de tus necesidades
+            sameSite: 'Strict', // O 'Lax', dependiendo de tus necesidades
         });
         res.json({
             id: userFound._id,
