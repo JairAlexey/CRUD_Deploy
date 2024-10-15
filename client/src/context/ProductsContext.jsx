@@ -21,7 +21,7 @@ export function ProductProvider({ children }) {
             const res = await getProductsRequest()
             setProducts(res.data);
         }catch (error){
-            console.error(error)
+            console.error("Error al obtener productos:", error.response ? error.response.data : error.message);        
         }
     }
 
