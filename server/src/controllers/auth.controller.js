@@ -62,11 +62,12 @@ export const login = async (req, res) => {
         const token = await createToken({ id: userFound._id });
         
         // Enviamos la respuesta al cliente
-        res.cookie('token', token, {
+        res.cookie('token', token);
+        /*res.cookie('token', token, {
             httpOnly: true, // Esto evita que el token sea accesible desde JavaScript
             secure: process.env.NODE_ENV === 'production', // Asegúrate de que esto esté habilitado en producción
             sameSite: 'Strict', // O 'Lax', dependiendo de tus necesidades
-        });
+        });*/
         res.json({
             id: userFound._id,
             token: token,
