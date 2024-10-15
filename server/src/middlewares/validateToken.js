@@ -3,7 +3,7 @@ import { tokenSecret } from '../config.js';
 
 export const authRequired = (req, res, next) => {
     console.log(req);
-    const token = req.cookies ? req.cookies.token : null; // Verifica si req.cookies existe
+    const token = req.data ? req.data.token : null; // Verifica si req.cookies existe
     if (!token) {
         return res.status(401).json({ message: 'No token provided' });
     }

@@ -35,10 +35,9 @@ export const signup = async (req, res) => {
         });
         res.json({
             id: userSaved._id,
-            username: userSaved.username,
+            token: token,
             email: userSaved.email,
-            createdAt: userSaved.createdAt,
-            updatedAt: userSaved.updatedAt,
+            
         });
     }
     catch (error) {
@@ -70,7 +69,7 @@ export const login = async (req, res) => {
         });
         res.json({
             id: userFound._id,
-            username: userFound.username,
+            token: token,
             email: userFound.email,
             createdAt: userFound.createdAt,
             updatedAt: userFound.updatedAt
