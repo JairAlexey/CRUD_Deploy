@@ -14,7 +14,7 @@ export const getProducts = async (req, res) => {
     }
 };
 
-export const createProduct = async (req, res) => {
+export const createProduct = async (req, res) => { 
     try {
         const { name, description, price, category } = req.body;
         const newProduct = new Product({ name, description, price, category, user: req.user.id }); // Cambiado aquí
