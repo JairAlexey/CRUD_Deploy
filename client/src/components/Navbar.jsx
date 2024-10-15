@@ -4,7 +4,7 @@ import { FaHome } from 'react-icons/fa';
 
 function Navbar() {
 
-    const { isAuthenticated, logout, user } = useAuth();
+    const { isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
     return (
         <nav>
