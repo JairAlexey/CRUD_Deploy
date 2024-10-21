@@ -45,7 +45,6 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Buscamos el usuario en la base de datos
         const userFound = await User.findOne({ email });
         if (!userFound) {
             return res.status(400).json({ message: 'Usuario no encontrado' });
@@ -56,10 +55,7 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: 'Contraseña incorrecta' });
         }
 
-        const token = await createToken({ id: userFound._id });
-        
-        // Enviamos la respuesta al cliente
-        localStorage.setItem('token', token); 
+        const token = createToken({ id: userFound._id }); // Asegúrate de que esta función esté bien definida
         res.json({
             id: userFound._id,
             token: token,
@@ -71,7 +67,7 @@ export const login = async (req, res) => {
         console.error('Error en login:', error);
         res.status(500).json({ message: 'Error interno del servidor' });
     }
-}
+};
 
 export const logout = async (req, res) => {
     localStorage.removeItem('token'); // Limpiar el token del almacenamiento local
