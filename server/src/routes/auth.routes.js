@@ -10,7 +10,6 @@ router.post('/signup', validateSchema(signupSchema), authCtrl.signup);
 router.post('/login', validateSchema(loginSchema), authCtrl.login);
 router.post('/logout', authCtrl.logout);
 router.get('/verifyToken', authCtrl.verifyToken);
-router.get('/profile', authRequired, authCtrl.profile); // Ruta protegida
 
 
 export default router;
