@@ -8,9 +8,11 @@ import cors from 'cors';
 const app = express();
 
 app.use(cors({
-    origin: ['https://mern-vercel-client-omega.vercel.app', 'http://localhost:5173'],
+    origin: process.env.CORS_ORIGIN || 'https://mern-vercel-client-omega.vercel.app',
     credentials: true,
 }));
+
+
 app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(express.json());

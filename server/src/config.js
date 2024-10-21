@@ -1,4 +1,4 @@
-// import dotenv from 'dotenv';
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-export const tokenSecret = 'mi_secreto_fijo';
+export const tokenSecret = process.env.TOKEN_SECRET || 'mi_secreto_fijo';

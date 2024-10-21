@@ -28,10 +28,13 @@ export const signup = async (req, res) => {
 
         const token = await createToken({ id: userSaved._id });
 
-        // Enviamos el token al cliente
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict',
+        });
         res.json({
             id: userSaved._id,
-            token: token,
             email: userSaved.email,
             createdAt: userSaved.createdAt,
             updatedAt: userSaved.updatedAt
@@ -56,12 +59,16 @@ export const login = async (req, res) => {
         }
 
         const token = await createToken({ id: userFound._id });
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict',
+        });
         res.json({
-            id: userFound._id,
-            token: token,
-            email: userFound.email,
-            createdAt: userFound.createdAt,
-            updatedAt: userFound.updatedAt
+            id: userSaved._id,
+            email: userSaved.email,
+            createdAt: userSaved.createdAt,
+            updatedAt: userSaved.updatedAt
         });
     } catch (error) {
         console.error('Error en login:', error);
