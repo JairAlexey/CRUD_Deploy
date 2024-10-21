@@ -8,14 +8,14 @@ export const signup = async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
-
-        //Busacamos al usuario (validacion)
-        const userFound = await User.findOne({email});
+        // Buscamos al usuario (validación)
+        const userFound = await User.findOne({ email });
         if (userFound) {
-            return res.status(400).json(["El email ya esta en uso"]);
+            return res.status(400).json(["El email ya está en uso"]);
         }
-        //Encriptamos la contraseña
-        const encryptedPassword = await bcrypt.hash(password, 10)
+
+        // Encriptamos la contraseña
+        const encryptedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
             username,
@@ -23,22 +23,21 @@ export const signup = async (req, res) => {
             password: encryptedPassword,
         });
 
-        //Guardamos el usuario en la base de datos
+        // Guardamos el usuario en la base de datos
         const userSaved = await newUser.save();
 
         const token = await createToken({ id: userSaved._id });
 
-        localStorage.setItem('token', token);
+        // Enviamos el token al cliente
         res.json({
-            id: userFound._id,
-            token: token, 
-            email: userFound.email,
-            createdAt: userFound.createdAt,
-            updatedAt: userFound.updatedAt
+            id: userSaved._id,
+            token: token,
+            email: userSaved.email,
+            createdAt: userSaved.createdAt,
+            updatedAt: userSaved.updatedAt
         });
-    }
-    catch (error) {
-        res.status(500).send({message: error.message });
+    } catch (error) {
+        res.status(500).send({ message: error.message });
     }
 }
 
@@ -59,7 +58,7 @@ export const login = async (req, res) => {
         const token = await createToken({ id: userFound._id });
         res.json({
             id: userFound._id,
-            token: token, 
+            token: token,
             email: userFound.email,
             createdAt: userFound.createdAt,
             updatedAt: userFound.updatedAt
@@ -71,12 +70,12 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-    localStorage.removeItem('token'); // Limpiar el token del almacenamiento local
+    // En el logout, simplemente informamos al cliente que cierre la sesión
     return res.status(200).json({ message: 'Sesión cerrada' });
 };
 
 export const profile = async (req, res) => {
-    const userFound = await User.findById(req.user.id)
+    const userFound = await User.findById(req.user.id);
 
     if (!userFound) {
         return res.status(400).json({ message: 'Usuario no encontrado' });
@@ -87,24 +86,24 @@ export const profile = async (req, res) => {
         email: userFound.email,
         createdAt: userFound.createdAt,
         updatedAt: userFound.updatedAt
-    })
+    });
 }
 
 export const verifyToken = async (req, res) => {
-    const {token} = req.cookies;
+    const { token } = req.cookies;
 
     if (!token) return res.status(401).json({ message: 'No autorizado' });
 
     jwt.verify(token, tokenSecret, async (err, user) => {
         if (err) return res.status(401).json({ message: 'No autorizado' });
 
-        const userFound = await User.findById(user.id)
+        const userFound = await User.findById(user.id);
         if (!userFound) return res.status(400).json({ message: 'Usuario no encontrado' });
         
         return res.json({
             id: userFound._id,
             username: userFound.username,
             email: userFound.email,
-        })
+        });
     });
 }
