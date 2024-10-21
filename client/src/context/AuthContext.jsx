@@ -17,6 +17,20 @@ export const AuthProvider = ({ children }) => {
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const navigate = useNavigate(); 
+
+    useEffect(() => {
+        const checkToken = () => {
+            const token = Cookies.get('token'); // Obtener el token de las cookies
+            if (!token) {
+                // Redirigir a la página de inicio de sesión si no hay token
+                navigate('/login');
+            }
+        };
+
+        checkToken(); // Llama a la función para verificar el token
+    }, [navigate]); // Asegúrate de incluir navigate en las dependencias
+
     const signup = async (user) => {
         try {
             const res = await signupRequest(user);
@@ -44,17 +58,6 @@ export const AuthProvider = ({ children }) => {
             setErrors([err.response.data.message]);
         }
     }
-
-    const checkToken = () => {
-        const token = Cookies.get('token');
-        if (!token) {
-            // Redirigir a la página de inicio de sesión o manejar el error
-        }
-    };
-    
-    useEffect(() => {
-        checkToken();
-    }, []);
 
     const logout = () => {
         Cookies.remove('token');
