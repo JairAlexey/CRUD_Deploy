@@ -55,10 +55,11 @@ export const login = async (req, res) => {
         if (!passwordMatch) {
             return res.status(401).json({ message: 'Contraseña incorrecta' });
         }
+
         const token = await createToken({ id: userFound._id });
         
         // Enviamos la respuesta al cliente
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', token); 
         res.json({
             id: userFound._id,
             token: token,
@@ -66,8 +67,7 @@ export const login = async (req, res) => {
             createdAt: userFound.createdAt,
             updatedAt: userFound.updatedAt
         });
-    }
-    catch (error) {
+    } catch (error) {
         console.error('Error en login:', error);
         res.status(500).json({ message: 'Error interno del servidor' });
     }
