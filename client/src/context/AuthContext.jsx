@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { signupRequest, loginRequest, verifyTokenRequest } from '../api/auth';
 import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom"; // Asegúrate de importar useNavigate
 
 export const AuthContext = createContext();
 export const useAuth = () => {
@@ -16,20 +17,38 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const navigate = useNavigate(); 
 
     useEffect(() => {
-        const checkToken = () => {
-            const token = Cookies.get('token'); // Obtener el token de las cookies
+        const checkLogin = async () => {
+            const token = Cookies.get('token'); // Obtener el token directamente
             if (!token) {
-                // Redirigir a la página de inicio de sesión si no hay token
-                navigate('/login');
+                setIsAuthenticated(false);
+                setLoading(false);
+                navigate('/'); // Redirigir si no hay token
+                return;
+            }
+
+            try {
+                const res = await verifyTokenRequest(token);
+                if (!res.data) {
+                    setIsAuthenticated(false);
+                    setLoading(false);
+                    navigate('/'); // Redirigir si el token no es válido
+                    return;
+                }
+                setIsAuthenticated(true);
+                setUser(res.data);
+            } catch (error) {
+                setIsAuthenticated(false);
+                setUser(null);
+                navigate('/'); // Redirigir en caso de error
+            } finally {
+                setLoading(false); // Asegúrate de que loading se actualice al final
             }
         };
-
-        checkToken(); // Llama a la función para verificar el token
-    }, [navigate]); // Asegúrate de incluir navigate en las dependencias
+        checkLogin();
+    }, [navigate]);
 
     const signup = async (user) => {
         try {
@@ -63,6 +82,7 @@ export const AuthProvider = ({ children }) => {
         Cookies.remove('token');
         setIsAuthenticated(false);
         setUser(null);
+        navigate('/login'); // Redirigir al cerrar sesión
     }
 
     useEffect(() => {
@@ -73,35 +93,6 @@ export const AuthProvider = ({ children }) => {
             return () => clearTimeout(timer); // Limpiar el timer si cambia de página
         }
     }, [errors]);
-
-    useEffect(() => {
-        const checkLogin = async () => {
-            const token = Cookies.get('token'); // Obtener el token directamente
-            if (!token) {
-                setIsAuthenticated(false);
-                setLoading(false);
-                return setUser(null);
-            }
-
-            try {
-                const res = await verifyTokenRequest(token);
-                console.log(res);
-                if (!res.data) {
-                    setIsAuthenticated(false);
-                    setLoading(false);
-                    return;
-                }
-                setIsAuthenticated(true);
-                setUser(res.data);
-                setLoading(false);
-            } catch (error) {
-                setIsAuthenticated(false);
-                setUser(null);
-                setLoading(false);
-            }
-        };
-        checkLogin();
-    }, []);
 
     return (
         <AuthContext.Provider value={{ signup, login, logout, loading, user, isAuthenticated, errors }}>
