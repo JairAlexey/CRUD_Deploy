@@ -29,9 +29,9 @@ export const signup = async (req, res) => {
         const token = await createToken({ id: userSaved._id });
 
         res.cookie('token', token, {
-            httpOnly: true, // Esto evita que el token sea accesible desde JavaScript
-            secure: process.env.NODE_ENV === 'production', // Asegúrate de que esto esté habilitado en producción
-            sameSite: 'Strict', // O 'Lax', dependiendo de tus necesidades
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Solo en producción
+            sameSite: 'Strict',
         });
         res.json({
             id: userSaved._id,
@@ -63,9 +63,9 @@ export const login = async (req, res) => {
         
         // Enviamos la respuesta al cliente
         res.cookie('token', token, {
-            httpOnly: true, // Esto evita que el token sea accesible desde JavaScript
-            secure: true, // Asegúrate de que esto esté habilitado en producción
-            sameSite: 'Strict', // O 'Lax', dependiendo de tus necesidades
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Solo en producción
+            sameSite: 'Strict',
         });
         res.json({
             id: userFound._id,
