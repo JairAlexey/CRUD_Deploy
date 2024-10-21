@@ -66,7 +66,8 @@ export const login = async (req, res) => {
             username: userFound.username,
             email: userFound.email,
             createdAt: userFound.createdAt,
-            updatedAt: userFound.updatedAt
+            updatedAt: userFound.updatedAt,
+            token: token
         });
     } catch (error) {
         console.error('Error en login:', error);
@@ -89,7 +90,8 @@ export const profile = async (req, res) => {
         username: userFound.username,
         email: userFound.email,
         createdAt: userFound.createdAt,
-        updatedAt: userFound.updatedAt
+        updatedAt: userFound.updatedAt,
+        token: token
     });
 }
 
