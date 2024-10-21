@@ -1,9 +1,10 @@
 import axios from './axios';
 
-export const signupRequest = user => axios.post(`/signup`, user);
+export const signupRequest = async (user) =>
+    axios.post(`/auth/signup`, user);
 
-export const loginRequest = user => axios.post(`/login`, user);
+export const loginRequest = async (user) => axios.post(`/auth/login`, user);
 
-export const verifyTokenRequest = () => axios.get('/verifyToken');
+export const verifyTokenRequest = async () => axios.get('/verifyToken');
 
 export const logoutRequest = () => axios.get('/logout');

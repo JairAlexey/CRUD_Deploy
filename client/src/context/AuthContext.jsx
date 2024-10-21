@@ -3,6 +3,7 @@ import { signupRequest, loginRequest, verifyTokenRequest } from '../api/auth';
 import Cookies from 'js-cookie';
 
 export const AuthContext = createContext();
+
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {
@@ -17,44 +18,39 @@ export const AuthProvider = ({ children }) => {
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // clear errors after 5 seconds
+    useEffect(() => {
+        if (errors.length > 0) {
+            const timer = setTimeout(() => {
+                setErrors([]);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [errors]);
+
     const signup = async (user) => {
         try {
-            const res = await signupRequest(user);
-            console.log(res.data);
-            setUser(res.data);
-            setIsAuthenticated(true);
-        } catch (err) {
-            if (Array.isArray(err.response.data)) {
-                return setErrors(err.response.data);
+            const res = await registerRequest(user);
+            if (res.status === 200) {
+                setUser(res.data);
+                setIsAuthenticated(true);
             }
-            setErrors([err.response.data.message]);
+        } catch (error) {
+            console.log(error.response.data);
+            setErrors(error.response.data.message);
         }
-    }
+    };
 
     const login = async (user) => {
         try {
             const res = await loginRequest(user);
-            console.log(res);
-            setIsAuthenticated(true);
             setUser(res.data);
-        } catch (err) {
-            if (Array.isArray(err.response.data)) {
-                return setErrors(err.response.data);
-            }
-            setErrors([err.response.data.message]);
-        }
-    }
-
-    const checkToken = () => {
-        const token = Cookies.get('token');
-        if (!token) {
-            // Redirigir a la página de inicio de sesión o manejar el error
+            setIsAuthenticated(true);
+        } catch (error) {
+            console.log(error);
+            // setErrors(error.response.data.message);
         }
     };
-    
-    useEffect(() => {
-        checkToken();
-    }, []);
 
     const logout = () => {
         Cookies.remove('token');

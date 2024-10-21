@@ -1,14 +1,11 @@
-import jwt from 'jsonwebtoken';
-import { tokenSecret } from '../config.js';
+import { TOKEN_SECRET } from "../config.js";
+import jwt from "jsonwebtoken";
 
-export const createToken = (payload) => {
+export async function createToken(payload) {
     return new Promise((resolve, reject) => {
-        jwt.sign(payload, tokenSecret, { expiresIn: '1h' }, (error, token) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(token);
-            }
+        jwt.sign(payload, TOKEN_SECRET, { expiresIn: "1d" }, (err, token) => {
+            if (err) reject(err);
+            resolve(token);
         });
     });
-};
+}

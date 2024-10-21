@@ -1,22 +1,35 @@
-import express from 'express';
-import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
-import authRoutes from './routes/auth.routes.js';
-import productRoutes from './routes/product.routes.js'; 
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
+
+import authRoutes from "./routes/auth.routes.js";
+import taksRoutes from "./routes/tasks.routes.js";
+import { FRONTEND_URL } from "./config.js";
 
 const app = express();
 
-app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'https://mern-vercel-client-omega.vercel.app',
-    credentials: true,
-}));
-
-
-app.use(cookieParser());
-app.use(morgan('dev'));
+app.use(
+    cors({
+        credentials: true,
+        origin: FRONTEND_URL,
+    })
+);
 app.use(express.json());
-app.use('/api', authRoutes);
-app.use('/api', productRoutes); 
+app.use(morgan("dev"));
+app.use(cookieParser());
+
+app.use("/api/auth", authRoutes);
+app.use("/api", taksRoutes);
+
+if (process.env.NODE_ENV === "production") {
+    const path = await import("path");
+    app.use(express.static("client/dist"));
+
+    app.get("*", (req, res) => {
+        console.log(path.resolve("client", "dist", "index.html"));
+        res.sendFile(path.resolve("client", "dist", "index.html"));
+    });
+}
 
 export default app;

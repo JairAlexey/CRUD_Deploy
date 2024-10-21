@@ -1,4 +1,6 @@
-import dotenv from 'dotenv';
-dotenv.config();
+export const PORT = process.env.PORT || 4000;
+export const MONGODB_URI =
+    process.env.MONGODB_URI || "mongodb://localhost/mern-tasks";
+export const TOKEN_SECRET = process.env.TOKEN_SECRET || "secret";
 
-export const tokenSecret = process.env.TOKEN_SECRET || 'mi_secreto_fijo';
+export const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
