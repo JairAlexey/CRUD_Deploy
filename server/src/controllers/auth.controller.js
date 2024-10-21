@@ -8,13 +8,11 @@ export const signup = async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
-        // Buscamos al usuario (validación)
         const userFound = await User.findOne({ email });
         if (userFound) {
             return res.status(400).json(["El email ya está en uso"]);
         }
 
-        // Encriptamos la contraseña
         const encryptedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
@@ -23,7 +21,6 @@ export const signup = async (req, res) => {
             password: encryptedPassword,
         });
 
-        // Guardamos el usuario en la base de datos
         const userSaved = await newUser.save();
 
         const token = await createToken({ id: userSaved._id });
@@ -78,7 +75,6 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-    // En el logout, simplemente informamos al cliente que cierre la sesión
     return res.status(200).json({ message: 'Sesión cerrada' });
 };
 
