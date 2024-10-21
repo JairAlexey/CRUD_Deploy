@@ -113,4 +113,4 @@ export const verifyToken = async (req, res) => {
             email: userFound.email,
         });
     });
-}
+};
