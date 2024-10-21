@@ -65,10 +65,11 @@ export const login = async (req, res) => {
             sameSite: 'Strict',
         });
         res.json({
-            id: userSaved._id,
-            email: userSaved.email,
-            createdAt: userSaved.createdAt,
-            updatedAt: userSaved.updatedAt
+            id: userFound._id,
+            username: userFound.username,
+            email: userFound.email,
+            createdAt: userFound.createdAt,
+            updatedAt: userFound.updatedAt
         });
     } catch (error) {
         console.error('Error en login:', error);
