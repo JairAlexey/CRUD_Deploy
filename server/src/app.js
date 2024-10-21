@@ -15,6 +15,6 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use('/api', authRoutes);
-app.use('/api', productRoutes); // Asegúrate de que esta línea sea correcta
+app.use('/api', productRoutes); 
 
 export default app;

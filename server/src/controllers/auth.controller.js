@@ -30,10 +30,11 @@ export const signup = async (req, res) => {
 
         localStorage.setItem('token', token);
         res.json({
-            id: userSaved._id,
-            token: token,
-            email: userSaved.email,
-            
+            id: userFound._id,
+            token: token, 
+            email: userFound.email,
+            createdAt: userFound.createdAt,
+            updatedAt: userFound.updatedAt
         });
     }
     catch (error) {
@@ -55,10 +56,10 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: 'Contraseña incorrecta' });
         }
 
-        const token = createToken({ id: userFound._id }); // Asegúrate de que esta función esté bien definida
+        const token = await createToken({ id: userFound._id });
         res.json({
             id: userFound._id,
-            token: token,
+            token: token, 
             email: userFound.email,
             createdAt: userFound.createdAt,
             updatedAt: userFound.updatedAt
