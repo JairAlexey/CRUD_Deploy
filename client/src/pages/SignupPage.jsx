@@ -34,8 +34,8 @@ function SignupPage() {
                         type='text' 
                         placeholder='Nombre de usuario' 
                         {...register('username', { required: 'El nombre de usuario es requerido' })} 
+                        autoComplete="username" 
                     />
-                    {/* Mostrar errores de validación del frontend */}
                     {errors.username && (
                         <div className="error-message">
                             <p>{errors.username.message}</p>
@@ -47,6 +47,7 @@ function SignupPage() {
                         type='email' 
                         placeholder='Correo electrónico' 
                         {...register('email', { required: 'El correo electrónico es requerido' })} 
+                        autoComplete="email" 
                     />
                     {errors.email && (
                         <div className="error-message">
@@ -62,6 +63,7 @@ function SignupPage() {
                             required: 'La contraseña es requerida', 
                             minLength: { value: 6, message: 'Debe tener al menos 6 caracteres' }
                         })} 
+                        autoComplete="new-password" 
                     />
                     {errors.password && (
                         <div className="error-message">
