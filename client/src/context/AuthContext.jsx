@@ -45,6 +45,17 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const checkToken = () => {
+        const token = Cookies.get('token');
+        if (!token) {
+            // Redirigir a la página de inicio de sesión o manejar el error
+        }
+    };
+    
+    useEffect(() => {
+        checkToken();
+    }, []);
+
     const logout = () => {
         Cookies.remove('token');
         setIsAuthenticated(false);
