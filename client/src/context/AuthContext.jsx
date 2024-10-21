@@ -2,11 +2,11 @@ import { createContext, useState, useContext, useEffect } from "react";
 import { signupRequest, loginRequest, verifyTokenRequest } from '../api/auth';
 import Cookies from 'js-cookie';
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider')
+        throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
 }
@@ -17,15 +17,13 @@ export const AuthProvider = ({ children }) => {
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
-
     const signup = async (user) => {
         try {
-            const res = await signupRequest(user)
+            const res = await signupRequest(user);
             console.log(res.data);
             setUser(res.data);
             setIsAuthenticated(true);
-        } catch
-        (err) {
+        } catch (err) {
             if (Array.isArray(err.response.data)) {
                 return setErrors(err.response.data);
             }
@@ -35,12 +33,11 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (user) => {
         try {
-            const res = await loginRequest(user)
+            const res = await loginRequest(user);
             console.log(res);
             setIsAuthenticated(true);
             setUser(res.data);
-        } catch
-        (err) {
+        } catch (err) {
             if (Array.isArray(err.response.data)) {
                 return setErrors(err.response.data);
             }
@@ -57,23 +54,23 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (errors.length > 0) {
             const timer = setTimeout(() => {
-                setErrors([])
-            }, 5000)
-            return () => clearTimeout(timer) //Si cambia de pagina se limpia el timer
+                setErrors([]);
+            }, 5000);
+            return () => clearTimeout(timer); // Limpiar el timer si cambia de página
         }
-    }, [errors]) //Funcion para limpiar los errores despues de 5 segundos
+    }, [errors]);
 
     useEffect(() => {
         const checkLogin = async () => {
-            const cookies = Cookies.get();
-            if (!cookies.token) { //Primero comprueba si no hay token
-                setIsAuthenticated(false); //Si no hay token, isAuthenticated es false
-                setLoading(false); //No esta cargando
-                return setUser(null); //No hay usuario
+            const token = Cookies.get('token'); // Obtener el token directamente
+            if (!token) {
+                setIsAuthenticated(false);
+                setLoading(false);
+                return setUser(null);
             }
 
             try {
-                const res = await verifyTokenRequest(cookies.token); //Si hay token, verifica el token, es decir se envia al backend para verificar si es valido
+                const res = await verifyTokenRequest(token);
                 console.log(res);
                 if (!res.data) {
                     setIsAuthenticated(false);
@@ -93,8 +90,8 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ signup, login, logout,loading, user, isAuthenticated, errors }}>
+        <AuthContext.Provider value={{ signup, login, logout, loading, user, isAuthenticated, errors }}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }

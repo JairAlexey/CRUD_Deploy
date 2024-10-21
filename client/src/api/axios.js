@@ -6,7 +6,6 @@ const instance = axios.create({
     withCredentials: true,
 });
 
-// Interceptor para agregar el token al encabezado
 instance.interceptors.request.use(config => {
     const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
     if (token) {
