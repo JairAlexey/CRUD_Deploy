@@ -28,11 +28,7 @@ export const signup = async (req, res) => {
 
         const token = await createToken({ id: userSaved._id });
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Solo en producción
-            sameSite: 'Strict',
-        });
+        localStorage.setItem('token', token);
         res.json({
             id: userSaved._id,
             token: token,
@@ -62,11 +58,7 @@ export const login = async (req, res) => {
         const token = await createToken({ id: userFound._id });
         
         // Enviamos la respuesta al cliente
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Solo en producción
-            sameSite: 'Strict',
-        });
+        localStorage.setItem('token', token);
         res.json({
             id: userFound._id,
             token: token,
@@ -82,11 +74,9 @@ export const login = async (req, res) => {
 }
 
 export const logout = async (req, res) => {
-    res.cookie('token', '', {
-    expires: new Date(0),
-    });
+    localStorage.removeItem('token'); // Limpiar el token del almacenamiento local
     return res.status(200).json({ message: 'Sesión cerrada' });
-}
+};
 
 export const profile = async (req, res) => {
     const userFound = await User.findById(req.user.id)

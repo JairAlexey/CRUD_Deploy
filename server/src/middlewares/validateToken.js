@@ -1,5 +1,5 @@
 export const authRequired = (req, res, next) => {
-    const token = req.cookies ? req.cookies.token : null; // Verifica si req.cookies existe
+    const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null; // Obtener el token del encabezado
     if (!token) {
         return res.status(401).json({ message: 'No token provided' });
     }
